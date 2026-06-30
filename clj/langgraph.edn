@@ -1,0 +1,11 @@
+{:profile :hakken
+ :entrypoint hakken.registry/dispatch
+ :graphs {:discovery "discovery_graph"
+          :phase-promotion "phase_promotion_graph"}
+ :tasks ["health"
+         "discovery"
+         "phase_promotion"
+         "trend_scan"
+         "supplier_search"
+         "quality_eval"
+         "phase_router"]}

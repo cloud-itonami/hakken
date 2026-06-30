@@ -1,0 +1,73 @@
+(ns hakken.server
+  (:gen-class)
+  (:require [clojure.tools.logging :as log]
+            [hakken.registry :as registry]
+            [jsonista.core :as json])
+  (:import [com.sun.net.httpserver HttpExchange HttpHandler HttpServer]
+           [java.io ByteArrayOutputStream]
+           [java.net InetSocketAddress]
+           [java.nio.charset StandardCharsets]))
+
+(def mapper
+  (json/object-mapper {:decode-key-fn keyword :encode-key-fn name}))
+
+(defn- read-body [^HttpExchange exchange]
+  (with-open [in (.getRequestBody exchange)
+              out (ByteArrayOutputStream.)]
+    (.transferTo in out)
+    (.toString out StandardCharsets/UTF_8)))
+
+(defn- write-json! [^HttpExchange exchange status body]
+  (let [bytes (.getBytes (json/write-value-as-string body mapper) StandardCharsets/UTF_8)]
+    (.set (.getResponseHeaders exchange) "content-type" "application/json; charset=utf-8")
+    (.sendResponseHeaders exchange status (count bytes))
+    (with-open [out (.getResponseBody exchange)]
+      (.write out bytes))))
+
+(defn- request-json [exchange]
+  (let [body (read-body exchange)]
+    (if (seq body)
+      (json/read-value body mapper)
+      {})))
+
+(defn handle-run [exchange]
+  (try
+    (let [request (request-json exchange)
+          task-type (or (:task_type request) (:taskType request) (:graph request))
+          payload (or (:payload request) {})
+          result (registry/dispatch task-type payload)
+          status (if (= "unknown_task" (:error result)) 404 200)]
+      (write-json! exchange status result))
+    (catch Exception ex
+      (log/error ex "hakken run failed")
+      (write-json! exchange 500 {:error "internal_error"
+                                 :message (.getMessage ex)}))))
+
+(defn route [^HttpExchange exchange]
+  (let [method (.getRequestMethod exchange)
+        path (.getPath (.getRequestURI exchange))]
+    (cond
+      (and (= "GET" method) (= "/health" path))
+      (write-json! exchange 200 (registry/dispatch "health" {}))
+
+      (and (= "POST" method) (#{"run" "invoke"} (subs path 1)))
+      (handle-run exchange)
+
+      :else
+      (write-json! exchange 404 {:error "not_found"}))))
+
+(defn create-server
+  ([] (create-server (Integer/parseInt (or (System/getenv "LANGSERVER_PORT") "8080"))))
+  ([port]
+   (let [server (HttpServer/create (InetSocketAddress. port) 0)]
+     (.createContext server "/" (reify HttpHandler
+                                  (handle [_ exchange]
+                                    (route exchange))))
+     (.setExecutor server nil)
+     server)))
+
+(defn -main [& _args]
+  (let [server (create-server)]
+    (.start server)
+    (log/info "hakken CLJ server listening" (.getAddress server))
+    @(promise)))
