@@ -33,6 +33,12 @@ venv/
 .nx/
 .turbo/
 
+# Clojure / tools.deps
+# `clojure -M:test` が clj/.cpcache/ を残す（docs/operator-quickstart.md 手順 8）。
+# clj/bb.edn の clean task はこれを消すが、bb は workspace 全体で退役済みなので走らない。
+.cpcache/
+target/
+
 # Logs / test output
 *.log
 coverage/
