@@ -1,5 +1,5 @@
 (ns hakken.pipeline
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (def grade-order {"S" 5 "A" 4 "B" 3 "C" 2 "D" 1})
 (def heavy-kg 5.0)
