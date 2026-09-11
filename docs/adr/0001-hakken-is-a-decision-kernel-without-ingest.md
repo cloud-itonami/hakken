@@ -22,7 +22,7 @@
    `"local-cid:" + id`、`okaimono_register` の ID は `"okaimono:" + item_id`、
    `social_announce` の告知は文字列。**どれも副作用を起こさない。**
 
-2. **決定核は本当に動く。** `clojure -M:test` が 6 tests / 21 assertions で緑。
+2. **決定核は本当に動く。** `kbb -M:test` が 6 tests / 21 assertions で緑。
    サーバを上げて `POST /run` を叩くと、枕（0.5 kg・rating 4.7・margin 0.9242）は
    `oem`・売価 8,800 円、マットレス（8.5 kg・margin 0.858）は `import`・35,800 円 +
    オペレータ通知 1 件を返す。**閾値・丸め・grade 足切りはすべて実際に効いている。**

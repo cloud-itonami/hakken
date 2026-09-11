@@ -1,4 +1,4 @@
-#!/usr/bin/env bb
+#!/usr/bin/env kbb
 ;; manifest/edn-datomize.bb — EDN → Datomic/Datascript tx-data 変換ツール。
 ;;
 ;; 「datomic/datascript query 可能」の定義: ファイルのトップレベルが
