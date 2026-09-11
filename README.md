@@ -6,7 +6,7 @@
 名乗る）。`cloud-itonami/hakken` は west project で、`orgs/cloud-itonami/hakken`
 に展開される。
 
-実体は **純関数の決定核（`clj/src/hakken/pipeline.cljc`）+ 3 経路の HTTP
+実体は **純関数の決定核（`clj/src/hakken/pipeline.cljk`）+ 3 経路の HTTP
 サーバ（`server.cljc`）** の 2 つだけ。動く。手順は
 [`docs/operator-quickstart.md`](docs/operator-quickstart.md) に、実際に踏んだ
 出力ごと置いてある。
@@ -61,7 +61,7 @@ cross-actor 表は、**この repo のコードのどこからも参照されて
 **軽くて粗利が高い候補は `dropship` を経由せず、いきなり `oem` に入る。**
 同梱の stub 枕（0.5 kg・rating 4.7・margin 0.9242）が実際にそうなり、告知文は
 【新着 自社ブランド】になる —— まだ 1 個も売っていない SKU に対して。これは
-`clj/test/hakken/pipeline_test.cljc` が `(is (= "oem" (:phase sku)))` として
+`clj/test/hakken/pipeline_test.cljk` が `(is (= "oem" (:phase sku)))` として
 固定している**意図された挙動**である。`CLAUDE.md` の「Ph1 → Ph2 → Ph3」表は
 ライフサイクルに読めるので、そこだけ取り違えやすい。
 

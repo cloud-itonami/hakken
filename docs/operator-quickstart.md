@@ -1,6 +1,6 @@
 # operator quickstart
 
-**この repo は動く。** 決定核（`clj/src/hakken/pipeline.cljc`）と HTTP サーバを
+**この repo は動く。** 決定核（`clj/src/hakken/pipeline.cljk`）と HTTP サーバを
 自分の手元で起動して、フェーズ判定を実際に出させるまでが 9 手順ある。
 
 9 手順とも **2026-08-09 に実際に踏んで、出力をそのまま貼ってある**。必要なのは
