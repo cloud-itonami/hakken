@@ -1,7 +1,7 @@
 {:tasks
  {:requires ([babashka.fs :as fs])
   test {:doc "Run hakken CLJ tests"
-        :task (shell "clojure -M:test")}
+        :task (shell "kbb -M:test")}
   clean {:doc "Remove local build/test artifacts"
          :task (doseq [path [".cpcache" "target"]]
                  (fs/delete-tree path))}}}

@@ -59,7 +59,7 @@ openjdk version "24.0.2" 2025-07-15
 **変更前から赤い repo は触らない。** 自分の変更の可否を判定できなくなる。
 
 ```bash
-cd "$REPO/clj" && clojure -M:test
+cd "$REPO/clj" && kbb -M:test
 ```
 
 実測:
@@ -80,13 +80,13 @@ Ran 6 tests containing 21 assertions.
 
 > ⚠ このワークスペースでは重い build を同時 1 本に制限している。CI や他セッションと
 > 並走しうる場所で回すときは
-> `node "$ROOT/scripts/resource-guard.mjs" run build -- clojure -M:test` を使う。
+> `node "$ROOT/scripts/resource-guard.mjs" run build -- kbb -M:test` を使う。
 
 ## 手順 3 — サーバを起動して `/health` を叩く
 
 ```bash
 cd "$REPO/clj"
-LANGSERVER_PORT=8412 clojure -M -m hakken.server &
+LANGSERVER_PORT=8412 kbb -M -m hakken.server &
 sleep 20                      # JVM 起動 + 依存解決。初回はもっとかかる
 curl -s http://127.0.0.1:8412/health; echo
 ```

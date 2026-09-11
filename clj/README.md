@@ -21,11 +21,11 @@ payload/stub inputs so the runtime is portable and testable.
 Run tests:
 
 ```sh
-clojure -M:test
+kbb -M:test
 ```
 
 Run server:
 
 ```sh
-LANGSERVER_PORT=8080 clojure -M -m hakken.server
+LANGSERVER_PORT=8080 kbb -M -m hakken.server
 ```
