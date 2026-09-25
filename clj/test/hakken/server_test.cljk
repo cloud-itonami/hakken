@@ -1,5 +1,5 @@
 (ns hakken.server-test
-  (:require [clojure.test :refer [deftest is]]
+  (:require [kotoba.test :refer [deftest is]]
             [hakken.server :as server]
             [jsonista.core :as json])
   (:import [java.net ServerSocket URI]

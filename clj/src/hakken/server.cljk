@@ -1,6 +1,6 @@
 (ns hakken.server
   (:gen-class)
-  (:require [clojure.tools.logging :as log]
+  (:require [kotoba.bytes :as kbytes] [clojure.tools.logging :as log]
             [hakken.registry :as registry]
             [jsonista.core :as json])
   (:import [com.sun.net.httpserver HttpExchange HttpHandler HttpServer]
@@ -18,7 +18,7 @@
     (.toString out StandardCharsets/UTF_8)))
 
 (defn- write-json! [^HttpExchange exchange status body]
-  (let [bytes (.getBytes (json/write-value-as-string body mapper) StandardCharsets/UTF_8)]
+  (let [bytes (kbytes/utf8-bytes (json/write-value-as-string body mapper))]
     (.set (.getResponseHeaders exchange) "content-type" "application/json; charset=utf-8")
     (.sendResponseHeaders exchange status (count bytes))
     (with-open [out (.getResponseBody exchange)]

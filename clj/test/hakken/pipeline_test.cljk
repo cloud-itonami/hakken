@@ -1,5 +1,5 @@
 (ns hakken.pipeline-test
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [hakken.pipeline :as pipeline]
             [hakken.registry :as registry]))
 
