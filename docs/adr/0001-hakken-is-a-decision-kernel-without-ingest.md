@@ -10,14 +10,14 @@
 から切り出され、以降 commit は 2 本（EDN datomize のみ）。**root に README が無く、
 「何が在って何が無いか」を述べる場所が repo 内に存在しなかった。**
 
-代わりに root にあったのは `CLAUDE.md` 4,330 B で、そこには kotoba KG スキーマ・
+代わりに root にあったのは `AGENTS.md` 4,330 B で、そこには kotoba KG スキーマ・
 `ai.gftd.apps.kotobase.kg.*` エンドポイント表・SPARQL クエリ・5 つの cross-actor
 連携先が書かれている。**読むと「繋がっている系」に読める。**
 
 実測（2026-08-09、手順は `docs/operator-quickstart.md`。すべて実行して出力を確認）:
 
 1. **外部呼び出しが 1 本も無い。** `clj/src/` 13,924 B のどこにも HTTP クライアントは
-   無く、`CLAUDE.md` が挙げる `kakaku` / `kaimono-review` / `okaimono` / `tsukuru` /
+   無く、`AGENTS.md` が挙げる `kakaku` / `kaimono-review` / `okaimono` / `tsukuru` /
    `kotoba` のいずれも参照されない。`gap_analysis` の `kotoba_cids` は
    `"local-cid:" + id`、`okaimono_register` の ID は `"okaimono:" + item_id`、
    `social_announce` の告知は文字列。**どれも副作用を起こさない。**
@@ -32,7 +32,7 @@
    軽くて粗利が高い候補は `dropship` を経ずに `oem` に入り、**まだ 1 個も売っていない
    SKU に「【新着 自社ブランド】」の告知文が組まれる。** これは
    `pipeline_test.cljc` が `(is (= "oem" (:phase sku)))` で固定した意図された挙動だが、
-   `CLAUDE.md` の「Ph1 Dropship → Ph2 Import → Ph3 OEM」表は段階的な前進に読める。
+   `AGENTS.md` の「Ph1 Dropship → Ph2 Import → Ph3 OEM」表は段階的な前進に読める。
 
 4. **`phase_router` と `phase_promotion` の語彙が繋がっていない。** 前者は `"import"`、
    後者は `":phase/import"` しか受けず、変換はこの repo に無い。同一の行で phase
@@ -41,7 +41,7 @@
    ではなく 7 文字の問題。
 
 5. **`wasm/hakken-phase-promotion.wasm` 18.5 MB は孤児。** WASI 0.2 component
-   （binary version `0x1000d`）で、`CLAUDE.md` のファイル一覧に「preserved generated
+   （binary version `0x1000d`）で、`AGENTS.md` のファイル一覧に「preserved generated
    artifact」として現れる以外、repo 内のどこからも参照されない。`clj/` の実装とも
    独立していて、どちらが正本かを述べたものが無い。
 
@@ -50,14 +50,14 @@
 **この repo を「未完成のパイプライン」ではなく『ingest を持たない決定核
 （decision kernel）』として記述する。** 根拠は上記 1・2 —— 判断は完成していて、
 入力の調達だけが無い。この 2 つを混ぜて「scaffold」と一語で呼ぶと、**動くものを
-動かないと誤読させる**（実際、`CLAUDE.md` の `status: scaffold (2026-05-27)` が
+動かないと誤読させる**（実際、`AGENTS.md` の `status: scaffold (2026-05-27)` が
 そう読める）。
 
 具体的に、この判断が縛るもの:
 
 - **root `README.md` は、実装が「する」ことと「しない」ことを分けて述べる。**
-  `CLAUDE.md` は設計文書であって実装状況ではない、と README 側で明示する
-  （`CLAUDE.md` 自体は設計意図の記録として残す。消すと何を目指していたかが失われる）。
+  `AGENTS.md` は設計文書であって実装状況ではない、と README 側で明示する
+  （`AGENTS.md` 自体は設計意図の記録として残す。消すと何を目指していたかが失われる）。
 - **`docs/operator-quickstart.md` は実際に踏んだ手順と出力だけを載せる。**
   9 手順すべて 2026-08-09 に実行済み。上記 3・4 は quickstart の手順 4・6 として
   再現できる形で置いた（誰でも 0 件と 1 件の差を自分で見られる）。
@@ -76,7 +76,7 @@
   水増しである（`itonami-maturity-improve` skill が構造的に禁じている形）。
   実装が `clj/` に居るのは Dockerfile と deps.edn の配置に沿った既存の判断で、
   変える理由が計測しかないなら変えない。**測り方の側の限界としてここに記録する。**
-- **`CLAUDE.md` の未実装部分を削除する。** 削ると「何を目指していたか」が repo から
+- **`AGENTS.md` の未実装部分を削除する。** 削ると「何を目指していたか」が repo から
   消える。README で「設計文書であって実装ではない」と述べるほうが、情報を失わずに
   誤読を止められる。
 - **語彙の不一致を `pipeline.cljc` で直す。** 直せるが、**これは 1 行の変更で済む

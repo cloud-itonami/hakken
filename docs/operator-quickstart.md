@@ -236,7 +236,7 @@ git -C "$REPO" status --porcelain
 
 `clj/.cpcache/` は tools.deps のクラスパスキャッシュ。**コミットしない**
 （`.gitignore` に登録済み）。`clj/bb.edn` に `clean` task があるが、`bb` は
-workspace 全体で退役済み（superproject `CLAUDE.md`）なので走らない ——
+workspace 全体で退役済み（superproject `AGENTS.md`）なので走らない ——
 消すなら `rm -rf "$REPO/clj/.cpcache"`。
 
 ## 手順 9 — 何を確かめたことになるか
@@ -246,7 +246,7 @@ workspace 全体で退役済み（superproject `CLAUDE.md`）なので走らな�
 
 - 外部システムとの接続（**この repo に 1 本も無い**。`kotoba_cids` /
   `registered_okaimono_ids` / `announcements` はすべて文字列）
-- `CLAUDE.md` が記す kotoba KG スキーマ・`ai.gftd.apps.kotobase.kg.*` 呼び出し・
+- `AGENTS.md` が記す kotoba KG スキーマ・`ai.gftd.apps.kotobase.kg.*` 呼び出し・
   cross-actor 連携（**コードから参照されていない**。設計文書として読む）
 - `wasm/hakken-phase-promotion.wasm`（18.5 MB の WASI 0.2 component。repo 内の
   どこからも参照されず、`clj/` の実装とも独立）

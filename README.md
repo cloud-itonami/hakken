@@ -2,7 +2,7 @@
 
 **hakken（発見）は、ブランド品と OEM 候補を突き合わせて「その候補をどの販売
 フェーズで売るか」を決める決定ランタイムである。** 名前が機能を示さないので
-最初に名乗る（superproject `CLAUDE.md` の規約: メタファ名の repo は README 冒頭で
+最初に名乗る（superproject `AGENTS.md` の規約: メタファ名の repo は README 冒頭で
 名乗る）。`cloud-itonami/hakken` は west project で、`orgs/cloud-itonami/hakken`
 に展開される。
 
@@ -39,7 +39,7 @@ HTTP は `GET /health`、`POST /run`、`POST /invoke`（`/run` と同じ）。
 - `quality_eval` は評点が渡されなければ `rating × 20` を score とし S/A/B/C を付ける
   （5 軸のうち `cost_performance` は定数 0.8、`sustainability` は定数 0.7）。
 
-**`CLAUDE.md` はこの repo の実装ではなく設計文書である。** そこに書かれた
+**`AGENTS.md` はこの repo の実装ではなく設計文書である。** そこに書かれた
 kotoba KG スキーマ・`ai.gftd.apps.kotobase.kg.*` エンドポイント表・SPARQL・
 cross-actor 表は、**この repo のコードのどこからも参照されていない**。読むときは
 設計意図として読み、実装状況として読まないこと。
@@ -62,7 +62,7 @@ cross-actor 表は、**この repo のコードのどこからも参照されて
 同梱の stub 枕（0.5 kg・rating 4.7・margin 0.9242）が実際にそうなり、告知文は
 【新着 自社ブランド】になる —— まだ 1 個も売っていない SKU に対して。これは
 `clj/test/hakken/pipeline_test.cljk` が `(is (= "oem" (:phase sku)))` として
-固定している**意図された挙動**である。`CLAUDE.md` の「Ph1 → Ph2 → Ph3」表は
+固定している**意図された挙動**である。`AGENTS.md` の「Ph1 → Ph2 → Ph3」表は
 ライフサイクルに読めるので、そこだけ取り違えやすい。
 
 **ライフサイクルの前進は別 task の `phase_promotion`** で、`dropship → import`
@@ -87,7 +87,7 @@ clj/                     ← 実装はすべてこの下（root に src/ は無�
   bb.edn                 clean task。bb は workspace 全体で退役済みなので走らない
 wasm/                    18.5 MB の WASI 0.2 component。repo 内のどこからも参照されない
 schema.edn / README.md.edn / edn-datomize.bb
-CLAUDE.md                設計文書（上記のとおり実装ではない）
+AGENTS.md                設計文書（上記のとおり実装ではない）
 docs/                    operator-quickstart.md と adr/
 ```
 
